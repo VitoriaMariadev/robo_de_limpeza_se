@@ -3,11 +3,11 @@
 
 SoftwareSerial bluetoothSerial(9, 10); // RX, TX
 
-AF_DCMotor motobr(1);
-AF_DCMotor motobl(4);
+AF_DCMotor motofr(1);
+AF_DCMotor motofl(4);
 
-AF_DCMotor motofr(2);
-AF_DCMotor motofl(3);
+AF_DCMotor motobr(2);
+AF_DCMotor motobl(3);
 
 char command;
 
@@ -26,15 +26,13 @@ void setup()
 void loop() {
   if (bluetoothSerial.available() > 0) {
     command = bluetoothSerial.read();
-
-    Stop(); //initialize with motors stoped
     
     switch (command) {
       case 'F':
         motobr.setSpeed(225);
         motobl.setSpeed(225);
 
-        motobr.run(BACKWARD);
+        motobr.run(FORWARD);
         motobl.run(BACKWARD);
         Serial.println("Robô andando para a frente");
         break;
@@ -42,7 +40,7 @@ void loop() {
       case 'G':
         motobr.setSpeed(225);
         motobl.setSpeed(225);
-        motobr.run(FORWARD);
+        motobr.run(BACKWARD);
         motobl.run(FORWARD);
         Serial.println("Robô andando para trás");
         break;
@@ -50,7 +48,7 @@ void loop() {
       case 'L':
         motobr.setSpeed(225);
         motobl.setSpeed(0);
-        motobr.run(BACKWARD);
+        motobr.run(FORWARD);
         motobl.run(RELEASE);
         Serial.println("Robô andando para a esquerda");
         break;
@@ -69,8 +67,7 @@ void loop() {
         motofl.setSpeed(225);
         motofr.run(BACKWARD);
         motofl.run(FORWARD);
-        Serial.println("Rodando
-        ");
+        Serial.println("Rodando");
         break;      
 
       case 'X':
@@ -87,4 +84,3 @@ void loop() {
     }
   }
 }
-
